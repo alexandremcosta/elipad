@@ -5,7 +5,7 @@ defmodule ElipadWeb.PageController do
     render(conn, "index.html")
   end
 
-  def index(conn, _params) do
-    render(conn, "show.html")
+  def show(conn, %{"page" => page}) do
+    render(conn, "show.html", page: page)
   end
 end

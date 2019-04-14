@@ -14,4 +14,10 @@ import "phoenix_html"
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
-// import socket from "./socket"
+import socket from "./socket"
+import Page from "./page"
+
+let textarea = document.getElementById("textarea")
+if(textarea) {
+  Page.init(socket, textarea)
+}

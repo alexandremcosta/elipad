@@ -1,1 +1,1 @@
-<textarea></textarea>
+<textarea id="textarea" data-page="<%= @page %>"></textarea>
