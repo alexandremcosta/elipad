@@ -12,19 +12,21 @@ let Page = {
     let pageChannel = socket.channel("page:" + page)
 
     element.addEventListener("keyup", e => {
-      console.log("## Push update_page on keyup")
       pageChannel
-        .push("update_page", {body: element.value})
+        .push("update_page", {body: element.value, token: window.userToken})
         .receive("error", e => console.log(e))
     })
 
     pageChannel.on("update_page", (page) => {
-      console.log("## PageChannel on update_page")
-      element.value = page["body"]
+      if (page["token"] != window.userToken)
+        element.value = page["body"]
     })
 
     pageChannel.join()
-      .receive("ok", resp => console.log("joined the page channel", resp))
+      .receive("ok", resp => {
+        element.value = resp
+        console.log("joined the page channel", resp)
+      })
       .receive("error", reason => console.log("join failed", reason))
   }
 }
