@@ -1,3 +1,5 @@
+Demo: https://nutritious-active-duckbillplatypus.gigalixirapp.com/
+
 # Elipad
 
 To start your Phoenix server:
