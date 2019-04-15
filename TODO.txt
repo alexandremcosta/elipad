@@ -1,6 +1,2 @@
-Broadcast only to other clients
-Persist page bodies to database
-Retrieve persisted body on channel join
-Remember cursor position on update_page
 Use phoenix liveview to live preview html, markdown
 
