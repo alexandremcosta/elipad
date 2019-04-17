@@ -1,3 +1,10 @@
+import marked from "marked"
+
+marked.setOptions({gfm: "true"}) // github flavored markdown
+function markdownToHtml(text) {
+  return marked(text)
+}
+
 function getCursorPosition(input) {
   if ("selectionStart" in input && document.activeElement == input) {
     return {
@@ -43,4 +50,4 @@ function setCursorPosition(input, start, end) {
   }
 }
 
-export {getCursorPosition, setCursorPosition}
+export {getCursorPosition, setCursorPosition, markdownToHtml}

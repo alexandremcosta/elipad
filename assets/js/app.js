@@ -17,7 +17,5 @@ import "phoenix_html"
 import socket from "./socket"
 import Page from "./page"
 
-let textarea = document.getElementById("textarea")
-if(textarea) {
-  Page.init(socket, textarea)
-}
+Page.init(socket)
+

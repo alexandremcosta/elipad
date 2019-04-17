@@ -1,1 +1,5 @@
-<textarea id="textarea" data-path="<%= @path %>"></textarea>
+<div class="column-container" id="show-page">
+  <textarea id="textarea" data-path="<%= @path %>"></textarea>
+  <div id="preview" class="hide"></div>
+  <button class="button button-outline" id="button-preview">Markdown</button>
+</div>

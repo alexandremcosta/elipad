@@ -1,49 +1,85 @@
-import {getCursorPosition, setCursorPosition} from "./shared"
+import {getCursorPosition, setCursorPosition, markdownToHtml} from "./shared"
 
 let Page = {
-  init(socket, element) {
-    if(!element) { return }
+  init(socket) {
+    if(!this.textarea()) { return }
 
     socket.connect()
-    this.onReady(element, socket)
+    this.onReady(socket)
   },
 
-  onReady(element, socket) {
-    let path = element.getAttribute("data-path")
-    let pageChannel = socket.channel("page:" + path)
+  onReady(socket) {
+    let path = this.textarea().getAttribute("data-path")
+    let channel = socket.channel("page:" + path)
 
-    element.addEventListener("keyup", e => {
-      pageChannel
+    this.bindChannelJoin(channel)
+    this.bindChannelUpdate(channel)
+    this.bindTextareaKeyup(channel)
+    this.bindPreviewButton()
+  },
+
+  bindPreviewButton() {
+    document.getElementById("button-preview").addEventListener("click", e => {
+      e.target.classList.toggle("button-outline")
+      document.getElementById("preview").classList.toggle("hide")
+    })
+  },
+
+  bindTextareaKeyup(channel) {
+    let textarea = this.textarea()
+
+    textarea.addEventListener("keyup", () => {
+      this.setPreview(textarea.value)
+      channel
         .push("update_page", {
-          body: element.value,
+          body: textarea.value,
           token: window.userToken,
-          position: getCursorPosition(element).start})
-        .receive("error", e => console.log(e))
+          position: getCursorPosition(textarea).start
+        })
+        .receive("error", e => console.log("Keyup event error", e))
     })
-
-    pageChannel.on("update_page", (change) => {
-      if (change.token != window.userToken)
-        this.updateInput(change, element)
-    })
-
-    pageChannel.join()
-      .receive("ok", body => {
-        element.value = body
-        console.log("joined the page channel")
-      })
-      .receive("error", reason => console.log("join failed", reason))
   },
 
-  updateInput(change, input) {
-    let position = getCursorPosition(input)
+  bindChannelUpdate(channel) {
+    channel.on("update_page", change => {
+      if (change.token != window.userToken) {
+        this.updateInput(change)
+        this.setPreview(change.body)
+      }
+    })
+  },
+
+  bindChannelJoin(channel) {
+    channel.join()
+      .receive("ok", body => {
+        this.textarea().value = body
+        this.setPreview(body)
+
+        console.log(`Joined "${channel.topic}" channel`)
+      })
+      .receive("error", reason => console.log("Hoin failed", reason))
+  },
+
+  updateInput(change) {
+    let textarea = this.textarea()
+    let position = getCursorPosition(textarea)
+
     if (change.position < position.start) {
-      let delta = change.body.length - input.value.length
-      console.log("OLHA O DELTA", delta)
+      let delta = change.body.length - textarea.value.length
       position.start += delta
       position.end += delta
     }
-    input.value = change.body
-    setCursorPosition(input, position.start, position.end)
+
+    textarea.value = change.body
+    setCursorPosition(textarea, position.start, position.end)
+  },
+
+  setPreview(body) {
+    document.getElementById("preview").innerHTML = markdownToHtml(body)
+  },
+
+  textarea() {
+    return document.getElementById("textarea")
   },
 }
 
