@@ -1,27 +1,27 @@
-<div class="homepage">
+<div id="index-page">
   <h1>
     Elipad is a collaborative and real-time notepad
   </h1>
   <ol>
-    <li>
-      Choose any random name for your notepad project
-    </li>
-    <li>
-      Type elipad.com/any_random_name on your browser
-    </li>
-    <li>
-      Tell your friends you access the same URL and start working!
-    </li>
+    <li>Choose any random name for your notepad project</li>
+    <li>Type elipad.com/any_random_name on your browser</li>
+    <li>Tell your friends you access the same URL and start working!</li>
   </ol>
 
-  <fieldset>
-    <label for="path">elipad.com/</label>
-    <input type="text" placeholder="anything" id="input-path" />
-    <button class="button button-outline" id="go-to-path">Go!</button>
-  </fieldset>
+  <form>
+    <fieldset>
+      <label for="path">elipad.com/</label>
+      <input type="text" placeholder="anything" id="input-path" />
+      <button type="submit" class="button button-outline" id="submit-path">
+        Go!
+      </button>
+    </fieldset>
+  </form>
 </div>
+
 <script>
-document.getElementById("go-to-path").addEventListener("click", () => {
+document.getElementById("submit-path").addEventListener("click", (e) => {
+  e.preventDefault()
   let path = document.getElementById("input-path").value
   if (path.length > 0)
     window.location = path;

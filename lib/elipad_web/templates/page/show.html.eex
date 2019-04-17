@@ -1,5 +1,11 @@
-<div class="column-container" id="show-page">
-  <textarea id="textarea" data-path="<%= @path %>"></textarea>
-  <div id="preview" class="hide"></div>
-  <button class="button button-outline" id="button-preview">Markdown</button>
+<div class="row" id="show-page">
+  <textarea class="column" id="textarea" data-path="<%= @path %>"></textarea>
+  <div id="preview" class="column hide"></div>
+  <div id="button-container">
+    <button class="button button-outline" id="button-preview">Markdown</button>
+    <button class="button button-outline" id="button-pdf" onclick="alert('TODO')">PDF</button>
+    <button class="button button-outline" id="button-html" onclick="alert('TODO')">HTML</button>
+    <button class="button button-outline" id="button-txt" onclick="alert('TODO')">TXT</button>
+    <button class="button button-outline" id="button-gist" onclick="alert('TODO')">Create Gist</button>
+  </div>
 </div>
