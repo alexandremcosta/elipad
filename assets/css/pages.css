@@ -20,11 +20,12 @@
 }
 #show-page #textarea {
   border: none;
+  border-right: 2px #eee solid;
 }
 
 #show-page #preview {
-  border-left: 2px #eee solid;
   overflow-y: scroll;
+  border: none;
 }
 
 #show-page #button-container {

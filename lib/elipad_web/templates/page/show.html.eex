@@ -3,9 +3,8 @@
   <div id="preview" class="column hide"></div>
   <div id="button-container">
     <button class="button button-outline" id="button-preview">Markdown</button>
-    <button class="button button-outline" id="button-pdf" onclick="alert('TODO')">PDF</button>
-    <button class="button button-outline" id="button-html" onclick="alert('TODO')">HTML</button>
-    <button class="button button-outline" id="button-txt" onclick="alert('TODO')">TXT</button>
-    <button class="button button-outline" id="button-gist" onclick="alert('TODO')">Create Gist</button>
+    <button class="button button-outline" id="button-pdf">PDF</button>
+    <button class="button button-outline" id="button-txt">TXT</button>
+    <button class="button button-outline" id="button-share">Short Link</button>
   </div>
 </div>

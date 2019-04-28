@@ -1,4 +1,6 @@
 import marked from "marked"
+import html2canvas from "html2canvas"
+import jsPDF from "jspdf"
 
 marked.setOptions({gfm: "true"}) // github flavored markdown
 function markdownToHtml(text) {
@@ -50,4 +52,41 @@ function setCursorPosition(input, start, end) {
   }
 }
 
-export {getCursorPosition, setCursorPosition, markdownToHtml}
+function downloadPdf(element, filename) {
+  let hidden = element.classList.contains("hide")
+
+  element.classList.remove("hide")
+
+  html2canvas(element).then(canvas => {
+    let imgData = canvas.toDataURL('image/png')
+    let doc = new jsPDF('p', 'mm')
+    doc.addImage(imgData, 'PNG', 10, 10)
+    doc.save(filename)
+
+    if (hidden)
+      element.classList.add("hide")
+  })
+}
+
+function downloadTxt(text, filename) {
+  let element = document.createElement('a')
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function displayShareLink(button) {
+  let url = window.location
+  let theLinkUrl = "http://thelink.la/api-shorten.php?url=" + url
+  
+  alert("A short url will be displayed in a tab. Copy and send to anyone.")
+  window.open(theLinkUrl, '_blank')
+}
+
+export {getCursorPosition, setCursorPosition, markdownToHtml, downloadPdf, downloadTxt, displayShareLink}

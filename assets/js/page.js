@@ -1,4 +1,4 @@
-import {getCursorPosition, setCursorPosition, markdownToHtml} from "./shared"
+import {getCursorPosition, setCursorPosition, markdownToHtml, downloadPdf, downloadTxt, displayShareLink} from "./shared"
 
 let Page = {
   init(socket) {
@@ -15,13 +15,29 @@ let Page = {
     this.bindChannelJoin(channel)
     this.bindChannelUpdate(channel)
     this.bindTextareaKeyup(channel)
-    this.bindPreviewButton()
+    this.bindButtons(path)
   },
 
-  bindPreviewButton() {
+  bindButtons(path) {
     document.getElementById("button-preview").addEventListener("click", e => {
+      e.preventDefault()
       e.target.classList.toggle("button-outline")
       document.getElementById("preview").classList.toggle("hide")
+    })
+
+    document.getElementById("button-pdf").addEventListener("click", e => {
+      e.preventDefault()
+      downloadPdf(document.getElementById('preview'), path + ".pdf")
+    })
+
+    document.getElementById("button-txt").addEventListener("click", e => {
+      e.preventDefault()
+      downloadTxt(this.textarea().value, path + ".txt")
+    })
+
+    document.getElementById("button-share").addEventListener("click", e => {
+      e.preventDefault()
+      displayShareLink(e.target)
     })
   },
 
